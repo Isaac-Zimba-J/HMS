@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HMS Technologies — Pioneer in the Next-Gen Technologies</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:       #050a12;
+      --surface:  #0b1422;
+      --panel:    #0f1d30;
+      --border:   rgba(0,220,200,0.12);
+      --cyan:     #00dcc8;
+      --cyan-dim: rgba(0,220,200,0.15);
+      --cyan-glow:rgba(0,220,200,0.35);
+      --blue:     #0575e6;
+      --white:    #eef4ff;
+      --muted:    #6b84a3;
+      --accent:   #ff4d6d;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ── GRID BACKGROUND ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,220,200,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,220,200,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    /* ── NAVIGATION ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%;
+      height: 72px;
+      background: rgba(5,10,18,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.3rem;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .nav-logo span {
+      color: var(--cyan);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 1.1rem;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .btn-nav {
+      background: var(--cyan);
+      color: var(--bg) !important;
+      padding: 8px 20px;
+      border-radius: 4px;
+      font-weight: 600 !important;
+      letter-spacing: 0.02em !important;
+      transition: box-shadow 0.2s, opacity 0.2s !important;
+    }
+    .btn-nav:hover { box-shadow: 0 0 20px var(--cyan-glow); opacity: 0.9; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 120px 5% 80px;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+    }
+    .orb-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,220,200,0.18), transparent 70%);
+      top: -100px; right: -100px;
+      animation: orb-drift 12s ease-in-out infinite alternate;
+    }
+    .orb-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(5,117,230,0.2), transparent 70%);
+      bottom: 0px; left: 10%;
+      animation: orb-drift 15s ease-in-out infinite alternate-reverse;
+    }
+    @keyframes orb-drift {
+      from { transform: translate(0,0); }
+      to   { transform: translate(30px, 40px); }
+    }
+
+    .hero-content {
+      max-width: 680px;
+      position: relative; z-index: 2;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--cyan);
+      border: 1px solid var(--border);
+      padding: 5px 14px;
+      border-radius: 2px;
+      margin-bottom: 28px;
+      letter-spacing: 0.06em;
+    }
+    .hero-tag::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--cyan);
+      border-radius: 50%;
+      animation: blink 1.4s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0.2; } }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+    }
+    h1 em {
+      font-style: normal;
+      color: transparent;
+      -webkit-text-stroke: 1px var(--cyan);
+    }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 44px;
+      line-height: 1.7;
+    }
+    .hero-actions {
+      display: flex; gap: 16px; flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--cyan);
+      color: var(--bg);
+      padding: 14px 32px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: box-shadow 0.25s, transform 0.2s;
+      letter-spacing: 0.01em;
+    }
+    .btn-primary:hover {
+      box-shadow: 0 0 32px var(--cyan-glow);
+      transform: translateY(-2px);
+    }
+    .btn-outline {
+      border: 1px solid var(--border);
+      color: var(--white);
+      padding: 14px 32px;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-outline:hover {
+      border-color: var(--cyan);
+      background: var(--cyan-dim);
+    }
+
+    /* ── METRICS STRIP ── */
+    .metrics {
+      position: relative; z-index: 1;
+      display: flex; flex-wrap: wrap;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: rgba(11,20,34,0.6);
+      backdrop-filter: blur(8px);
+    }
+    .metric {
+      flex: 1; min-width: 160px;
+      padding: 36px 40px;
+      border-right: 1px solid var(--border);
+      text-align: center;
+    }
+    .metric:last-child { border-right: none; }
+    .metric-num {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 2.6rem;
+      color: var(--cyan);
+      display: block;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .metric-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    /* ── SECTIONS ── */
+    section { position: relative; z-index: 1; }
+    .section-inner { max-width: 1200px; margin: 0 auto; padding: 100px 5%; }
+
+    .section-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--cyan);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      display: block;
+    }
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+    .section-sub {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 60px;
+    }
+
+    /* ── SERVICES ── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .service-card {
+      background: var(--surface);
+      padding: 40px 36px;
+      transition: background 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--cyan-dim), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .service-card:hover { background: var(--panel); }
+    .service-card:hover::after { opacity: 1; }
+    .service-icon {
+      width: 48px; height: 48px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 24px;
+      position: relative; z-index: 1;
+      background: var(--bg);
+    }
+    .service-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      position: relative; z-index: 1;
+    }
+    .service-card p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.65;
+      position: relative; z-index: 1;
+    }
+    .service-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--cyan);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.78rem;
+      text-decoration: none;
+      margin-top: 20px;
+      letter-spacing: 0.04em;
+      position: relative; z-index: 1;
+      transition: gap 0.2s;
+    }
+    .service-link:hover { gap: 10px; }
+
+    /* ── PROCESS ── */
+    .process-bg { background: var(--surface); }
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0;
+      position: relative;
+    }
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 30px; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      opacity: 0.3;
+    }
+    .step {
+      padding: 0 32px 0 0;
+      position: relative;
+    }
+    .step-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--cyan);
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .step-num::before {
+      content: '';
+      width: 10px; height: 10px;
+      border: 2px solid var(--cyan);
+      border-radius: 50%;
+      flex-shrink: 0;
+      box-shadow: 0 0 8px var(--cyan-glow);
+    }
+    .step h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 10px;
+    }
+    .step p { color: var(--muted); font-size: 0.88rem; line-height: 1.6; }
+
+    /* ── TECH STACK ── */
+    .stack-grid {
+      display: flex; flex-wrap: wrap; gap: 10px;
+    }
+    .stack-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.78rem;
+      padding: 7px 16px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      cursor: default;
+    }
+    .stack-tag:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      background: var(--cyan-dim);
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .testimonial {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 36px;
+      border-radius: 2px;
+      position: relative;
+    }
+    .testimonial::before {
+      content: '"';
+      position: absolute;
+      top: 16px; left: 30px;
+      font-family: 'Syne', sans-serif;
+      font-size: 5rem;
+      color: var(--cyan);
+      opacity: 0.15;
+      line-height: 1;
+    }
+    .testimonial p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--white);
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .t-author {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .t-avatar {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--bg);
+      flex-shrink: 0;
+    }
+    .t-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .t-role { font-size: 0.78rem; color: var(--muted); }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: linear-gradient(135deg, var(--panel), var(--surface));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(0,220,200,0.08), transparent 70%);
+    }
+    .cta-section .section-inner { position: relative; }
+    .cta-section h2 { font-size: clamp(2rem, 5vw, 3.5rem); }
+    .cta-section p {
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 40px;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+    .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative; z-index: 1;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 5% 40px;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 50px;
+    }
+    .footer-brand p {
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.7;
+      margin-top: 14px;
+      max-width: 240px;
+    }
+    .footer-col h4 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      color: var(--white);
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 10px; }
+    .footer-col a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--cyan); }
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-bottom p {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    .footer-socials { display: flex; gap: 16px; }
+    .social-icon {
+      width: 34px; height: 34px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .social-icon:hover { border-color: var(--cyan); color: var(--cyan); }
+
+    /* ── ANIMATIONS ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--cyan); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .process-steps { grid-template-columns: 1fr; }
+      .step { padding: 0 0 32px; }
+      .process-steps::before { display: none; }
+      .metric { padding: 28px 20px; }
+    }
+    @media (max-width: 480px) {
+      .footer-top { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">
+      <span>//</span> HMS Technologies
+    </a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#stack">Technology</a></li>
+      <li><a href="#testimonials">Clients</a></li>
+      <li><a href="#contact" class="btn-nav">Get Started</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-orb orb-1"></div>
+    <div class="hero-orb orb-2"></div>
+    <div class="hero-content">
+      <div class="hero-tag">SYSTEM ONLINE — Accepting New Projects</div>
+      <h1>Pioneer in the <em>Next-Gen</em> Technologies</h1>
+      <p class="hero-sub">
+        HMS Technologies delivers end-to-end IT solutions — from cloud architecture and cybersecurity to custom software development. We don't just solve problems; we engineer the future.
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Start a Project</a>
+        <a href="#services" class="btn-outline">View Services</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- METRICS -->
+  <div class="metrics">
+    <div class="metric fade-up">
+      <span class="metric-num">200+</span>
+      <span class="metric-label">Projects Delivered</span>
+    </div>
+    <div class="metric fade-up">
+      <span class="metric-num">99.97%</span>
+      <span class="metric-label">Uptime Guaranteed</span>
+    </div>
+    <div class="metric fade-up">
+      <span class="metric-num">12 yr</span>
+      <span class="metric-label">Industry Experience</span>
+    </div>
+    <div class="metric fade-up">
+      <span class="metric-num">48</span>
+      <span class="metric-label">Countries Served</span>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="section-inner">
+      <span class="section-tag fade-up">// What We Do</span>
+      <h2 class="fade-up">Enterprise-Grade<br>IT Services</h2>
+      <p class="section-sub fade-up">From the ground up, we architect, deploy, and secure digital systems that scale with your business.</p>
+      <div class="services-grid">
+        <div class="service-card fade-up">
+          <div class="service-icon">☁️</div>
+          <h3>Cloud Infrastructure</h3>
+          <p>Multi-cloud architecture design, migration, and ongoing management across AWS, Azure, and GCP. Built for performance and cost efficiency.</p>
+          <a href="#" class="service-link">Learn more →</a>
+        </div>
+        <div class="service-card fade-up">
+          <div class="service-icon">🔒</div>
+          <h3>Cybersecurity</h3>
+          <p>Penetration testing, SOC-as-a-service, SIEM implementation, and compliance frameworks. Your data, locked down.</p>
+          <a href="#" class="service-link">Learn more →</a>
+        </div>
+        <div class="service-card fade-up">
+          <div class="service-icon">⚙️</div>
+          <h3>Custom Software</h3>
+          <p>Bespoke applications built with modern stacks. APIs, SaaS platforms, internal tooling — designed to solve real operational problems.</p>
+          <a href="#" class="service-link">Learn more →</a>
+        </div>
+        <div class="service-card fade-up">
+          <div class="service-icon">📡</div>
+          <h3>Network Engineering</h3>
+          <p>Enterprise LAN/WAN, SD-WAN, VPN, and wireless infrastructure. Designed for reliability, security, and future-proofing.</p>
+          <a href="#" class="service-link">Learn more →</a>
+        </div>
+        <div class="service-card fade-up">
+          <div class="service-icon">🤖</div>
+          <h3>AI & Automation</h3>
+          <p>Workflow automation, ML pipelines, and AI integrations that eliminate bottlenecks and surface actionable intelligence.</p>
+          <a href="#" class="service-link">Learn more →</a>
+        </div>
+        <div class="service-card fade-up">
+          <div class="service-icon">🛠️</div>
+          <h3>Managed IT Support</h3>
+          <p>24/7 helpdesk, proactive monitoring, patch management, and on-site support. Technology that just works.</p>
+          <a href="#" class="service-link">Learn more →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process" class="process-bg">
+    <div class="section-inner">
+      <span class="section-tag fade-up">// How We Work</span>
+      <h2 class="fade-up">A Proven Delivery<br>Framework</h2>
+      <p class="section-sub fade-up">Every engagement follows a structured methodology that eliminates guesswork and maximizes outcomes.</p>
+      <div class="process-steps">
+        <div class="step fade-up">
+          <div class="step-num">01 / DISCOVER</div>
+          <h3>Deep Discovery</h3>
+          <p>We audit your current infrastructure, map technical debt, and define clear success metrics before writing a single line of code.</p>
+        </div>
+        <div class="step fade-up">
+          <div class="step-num">02 / ARCHITECT</div>
+          <h3>System Design</h3>
+          <p>Our engineers blueprint the full solution — infrastructure diagrams, data flows, security controls, and scalability models.</p>
+        </div>
+        <div class="step fade-up">
+          <div class="step-num">03 / BUILD</div>
+          <h3>Agile Delivery</h3>
+          <p>Sprint-based delivery with continuous stakeholder feedback loops. Working software every two weeks — no black-box development.</p>
+        </div>
+        <div class="step fade-up">
+          <div class="step-num">04 / SUSTAIN</div>
+          <h3>Long-term Support</h3>
+          <p>Post-launch monitoring, iterative improvements, and dedicated support. We stay in the game after go-live.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECH STACK -->
+  <section id="stack">
+    <div class="section-inner">
+      <span class="section-tag fade-up">// Technology Stack</span>
+      <h2 class="fade-up">Tools We Master</h2>
+      <p class="section-sub fade-up">We're technology-agnostic — selecting the right tool for each challenge, not the most fashionable one.</p>
+      <div class="stack-grid fade-up">
+        <span class="stack-tag">AWS</span><span class="stack-tag">Azure</span>
+        <span class="stack-tag">GCP</span><span class="stack-tag">Kubernetes</span>
+        <span class="stack-tag">Terraform</span><span class="stack-tag">Docker</span>
+        <span class="stack-tag">Python</span><span class="stack-tag">Node.js</span>
+        <span class="stack-tag">React</span><span class="stack-tag">PostgreSQL</span>
+        <span class="stack-tag">Redis</span><span class="stack-tag">Elasticsearch</span>
+        <span class="stack-tag">Cisco</span><span class="stack-tag">Palo Alto</span>
+        <span class="stack-tag">Grafana</span><span class="stack-tag">Prometheus</span>
+        <span class="stack-tag">Ansible</span><span class="stack-tag">GitHub Actions</span>
+        <span class="stack-tag">Apache Kafka</span><span class="stack-tag">Spark</span>
+        <span class="stack-tag">Airflow</span><span class="stack-tag">Splunk</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="section-inner">
+      <span class="section-tag fade-up">// Client Feedback</span>
+      <h2 class="fade-up">What Our Clients<br>Actually Say</h2>
+      <div class="testimonials-grid">
+        <div class="testimonial fade-up">
+          <p>NexCore migrated our entire data centre to the cloud in under 8 weeks with zero downtime. The planning and execution were genuinely impressive.</p>
+          <div class="t-author">
+            <div class="t-avatar">MK</div>
+            <div>
+              <div class="t-name">Martha Kimani</div>
+              <div class="t-role">CTO, Horizon Logistics</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial fade-up">
+          <p>After a ransomware incident, NexCore rebuilt our security posture from the ground up. We passed our ISO 27001 audit six months later.</p>
+          <div class="t-author">
+            <div class="t-avatar">JO</div>
+            <div>
+              <div class="t-name">James Okonkwo</div>
+              <div class="t-role">Head of IT, First Continental Bank</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial fade-up">
+          <p>The custom ERP integration saved our team 200+ hours per month. ROI was positive within the first quarter of deployment.</p>
+          <div class="t-author">
+            <div class="t-avatar">SN</div>
+            <div>
+              <div class="t-name">Sara Ndlovu</div>
+              <div class="t-role">Operations Director, AgriFin Group</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="contact" class="cta-section">
+    <div class="section-inner">
+      <span class="section-tag fade-up">// Let's Work Together</span>
+      <h2 class="fade-up">Ready to Build<br>Something Exceptional?</h2>
+      <p class="fade-up">Tell us about your challenge. We'll respond within one business day with a practical plan of action — not a sales pitch.</p>
+      <div class="cta-actions fade-up">
+        <a href="mailto:hello@nexcore.io" class="btn-primary">Send Us a Brief</a>
+        <a href="tel:+260000000000" class="btn-outline">Schedule a Call</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a class="nav-logo" href="#" style="text-decoration:none;">
+            <span style="font-family:'IBM Plex Mono',monospace;color:var(--cyan)">//</span> HMS Technologies
+          </a>
+          <p>Pioneer in the Next-Gen Technologies — building digital infrastructure for forward-thinking organisations across Africa and beyond.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#">Cloud Infrastructure</a></li>
+            <li><a href="#">Cybersecurity</a></li>
+            <li><a href="#">Custom Software</a></li>
+            <li><a href="#">Network Engineering</a></li>
+            <li><a href="#">AI & Automation</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Case Studies</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Partners</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="#">hello@nexcore.io</a></li>
+            <li><a href="#">+260 97 123 4567</a></li>
+            <li><a href="#">CBU Riverside Campus, Lusaka</a></li>
+            <li><a href="#">Support Portal</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 HMS Technologies. All rights reserved.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-icon" title="LinkedIn">in</a>
+          <a href="#" class="social-icon" title="GitHub">gh</a>
+          <a href="#" class="social-icon" title="Twitter">𝕏</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Intersection Observer for fade-up animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // Nav scroll effect
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      nav.style.background = window.scrollY > 40
+        ? 'rgba(5,10,18,0.97)'
+        : 'rgba(5,10,18,0.85)';
+    });
+
+    // Metric counter animation
+    const countEls = document.querySelectorAll('.metric-num');
+    const countObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const text = el.textContent;
+          const num = parseFloat(text.replace(/[^0-9.]/g, ''));
+          const suffix = text.replace(/[0-9.]/g, '');
+          let start = 0;
+          const duration = 1600;
+          const step = (timestamp) => {
+            if (!start) start = timestamp;
+            const progress = Math.min((timestamp - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = (num < 10 ? (num * eased).toFixed(2) : Math.round(num * eased)) + suffix;
+            if (progress < 1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+          countObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    countEls.forEach(el => countObserver.observe(el));
+  </script>
+</body>
+</html>

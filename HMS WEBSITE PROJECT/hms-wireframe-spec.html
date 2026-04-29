@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>HMS Technologies — UI/UX Wireframe Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --doc-bg:     #f4f5f7;
+    --doc-white:  #ffffff;
+    --doc-border: #dde1e9;
+    --doc-text:   #1a2233;
+    --doc-muted:  #6b7a99;
+    --doc-cyan:   #00b4a6;
+    --doc-blue:   #0575e6;
+    --doc-red:    #e63946;
+    --doc-green:  #2dc653;
+    --wf-bg:      #e8eaef;
+    --wf-block:   #c8cdd9;
+    --wf-dark:    #8b93a8;
+    --wf-accent:  #00b4a6;
+    --wf-border:  #b0b8cc;
+    --ann-bg:     #fff8e1;
+    --ann-border: #f4c430;
+    --spec-bg:    #eef3ff;
+    --spec-border:#3b82f6;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--doc-bg);
+    color: var(--doc-text);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ─── PAGE LAYOUT ─── */
+  .page {
+    width: 900px;
+    margin: 0 auto;
+    padding: 0 0 80px;
+  }
+
+  /* ─── COVER PAGE ─── */
+  .cover {
+    background: #050a12;
+    color: #eef4ff;
+    padding: 70px 60px 60px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(0,180,166,0.05) 1px,transparent 1px),
+                      linear-gradient(90deg,rgba(0,180,166,0.05) 1px,transparent 1px);
+    background-size: 36px 36px;
+  }
+  .cover-inner { position: relative; z-index: 1; }
+  .cover-badge {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    color: var(--doc-cyan);
+    border: 1px solid rgba(0,180,166,0.4);
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 28px;
+  }
+  .cover h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2.8rem;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+  .cover h1 span { color: var(--doc-cyan); }
+  .cover-sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+    color: #6b84a3;
+    margin-bottom: 40px;
+  }
+  .cover-meta {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.08);
+    margin-top: 40px;
+  }
+  .cover-meta-item {
+    padding: 18px 20px;
+    background: rgba(255,255,255,0.03);
+  }
+  .cover-meta-item label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #4a6080;
+    display: block;
+    margin-bottom: 5px;
+  }
+  .cover-meta-item span {
+    font-size: 0.88rem;
+    color: #eef4ff;
+    font-weight: 500;
+  }
+
+  /* ─── SECTION HEADERS ─── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 48px 0 20px;
+    padding: 0 4px;
+  }
+  .section-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--doc-cyan);
+    background: rgba(0,180,166,0.1);
+    border: 1px solid rgba(0,180,166,0.25);
+    padding: 3px 10px;
+    border-radius: 2px;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+  .section-header h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+    flex: 1;
+  }
+  .section-header::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--doc-border);
+  }
+
+  /* ─── CARDS ─── */
+  .card {
+    background: var(--doc-white);
+    border: 1px solid var(--doc-border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .card-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--doc-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fafbfc;
+  }
+  .card-header h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.92rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-header h3::before {
+    content: '';
+    width: 8px; height: 8px;
+    background: var(--doc-cyan);
+    border-radius: 50%;
+  }
+  .card-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    padding: 2px 8px;
+    border-radius: 2px;
+    letter-spacing: 0.06em;
+  }
+  .tag-section  { background: #e8f5ff; color: #0575e6; }
+  .tag-nav      { background: #fff0f3; color: #e63946; }
+  .tag-footer   { background: #f0fff4; color: #2dc653; }
+  .tag-component{ background: #f3f0ff; color: #7c3aed; }
+  .tag-ux       { background: #fff8e1; color: #d97706; }
+  .card-body { padding: 20px; }
+
+  /* ─── WIREFRAME FRAMES ─── */
+  .wf-frame {
+    background: var(--wf-bg);
+    border: 2px solid var(--wf-border);
+    border-radius: 4px;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--wf-dark);
+  }
+  .wf-frame-label {
+    position: absolute;
+    top: 8px; right: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--wf-dark);
+    letter-spacing: 0.06em;
+    z-index: 10;
+  }
+
+  /* NAV WIREFRAME */
+  .wf-nav {
+    background: #1e2533;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+  }
+  .wf-logo-box {
+    background: rgba(0,180,166,0.3);
+    border: 1px solid rgba(0,180,166,0.5);
+    padding: 5px 14px;
+    border-radius: 2px;
+    font-size: 0.7rem;
+    color: #00d4c4;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+  .wf-nav-links { display: flex; gap: 14px; }
+  .wf-nav-link {
+    background: rgba(255,255,255,0.08);
+    padding: 4px 10px;
+    border-radius: 2px;
+    font-size: 0.65rem;
+    color: #8b9ab5;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .wf-nav-cta {
+    background: rgba(0,180,166,0.8);
+    color: #050a12;
+    font-weight: 600;
+  }
+
+  /* HERO WIREFRAME */
+  .wf-hero {
+    background: #0d1524;
+    padding: 40px 24px;
+    min-height: 220px;
+    position: relative;
+    overflow: hidden;
+  }
+  .wf-hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,180,166,0.15), transparent 70%);
+  }
+  .wf-hero-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1px solid rgba(0,180,166,0.3);
+    padding: 3px 10px;
+    font-size: 0.6rem;
+    color: #00b4a6;
+    font-family: 'IBM Plex Mono', monospace;
+    margin-bottom: 14px;
+  }
+  .wf-h1-line {
+    height: 18px; background: rgba(255,255,255,0.25);
+    border-radius: 2px; margin-bottom: 7px;
+  }
+  .wf-h1-line.accent { background: rgba(0,180,166,0.4); width: 55%; }
+  .wf-sub-line { height: 8px; background: rgba(255,255,255,0.1); border-radius: 2px; margin-bottom: 5px; }
+  .wf-btn-row { display: flex; gap: 10px; margin-top: 18px; }
+  .wf-btn { height: 32px; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-family: 'IBM Plex Mono', monospace; min-width: 90px; }
+  .wf-btn-solid { background: rgba(0,180,166,0.7); color: #050a12; }
+  .wf-btn-ghost { border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.5); }
+
+  /* METRICS WIREFRAME */
+  .wf-metrics {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .wf-metric {
+    padding: 16px;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    text-align: center;
+    background: #111927;
+  }
+  .wf-metric:last-child { border-right: none; }
+  .wf-metric-num { display: block; height: 22px; background: rgba(0,180,166,0.35); border-radius: 2px; margin-bottom: 6px; }
+  .wf-metric-lbl { height: 7px; background: rgba(255,255,255,0.1); border-radius: 2px; width: 70%; margin: 0 auto; }
+
+  /* SERVICES WIREFRAME */
+  .wf-services-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 1px;
+    background: rgba(0,0,0,0.15);
+    border: 1px solid rgba(0,0,0,0.15);
+  }
+  .wf-service-card {
+    background: #1a2233;
+    padding: 18px;
+  }
+  .wf-icon-box { width: 32px; height: 32px; border: 1px solid rgba(0,180,166,0.3); border-radius: 4px; background: #0d1524; margin-bottom: 10px; }
+  .wf-card-title { height: 10px; background: rgba(255,255,255,0.25); border-radius: 2px; width: 60%; margin-bottom: 8px; }
+  .wf-card-text { height: 7px; background: rgba(255,255,255,0.1); border-radius: 2px; margin-bottom: 4px; }
+  .wf-card-link { height: 7px; background: rgba(0,180,166,0.3); border-radius: 2px; width: 35%; margin-top: 10px; }
+
+  /* PROCESS WIREFRAME */
+  .wf-process {
+    background: #111927;
+    padding: 24px;
+  }
+  .wf-steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; position: relative; }
+  .wf-steps::before {
+    content: '';
+    position: absolute;
+    top: 10px; left: 10%; right: 10%; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,180,166,0.4), transparent);
+  }
+  .wf-step-dot { width: 12px; height: 12px; border: 2px solid rgba(0,180,166,0.6); border-radius: 50%; margin-bottom: 14px; }
+  .wf-step-label { height: 7px; background: rgba(0,180,166,0.3); border-radius: 2px; width: 50%; margin-bottom: 8px; }
+  .wf-step-title { height: 9px; background: rgba(255,255,255,0.25); border-radius: 2px; width: 70%; margin-bottom: 6px; }
+  .wf-step-text { height: 6px; background: rgba(255,255,255,0.1); border-radius: 2px; margin-bottom: 4px; }
+
+  /* TECH STACK WIREFRAME */
+  .wf-stack { background: #0d1524; padding: 20px 24px; }
+  .wf-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+  .wf-tag { padding: 5px 12px; border: 1px solid rgba(255,255,255,0.12); border-radius: 2px; font-size: 0.6rem; color: rgba(255,255,255,0.35); font-family: 'IBM Plex Mono', monospace; }
+  .wf-tag.hi { border-color: rgba(0,180,166,0.4); color: rgba(0,180,166,0.7); }
+
+  /* TESTIMONIALS WIREFRAME */
+  .wf-testimonials { background: #0d1524; padding: 20px 24px; }
+  .wf-tgrid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+  .wf-tcard { background: #1a2233; border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 2px; }
+  .wf-quote-mark { font-size: 2rem; color: rgba(0,180,166,0.2); line-height: 1; margin-bottom: 4px; }
+  .wf-t-line { height: 6px; background: rgba(255,255,255,0.12); border-radius: 2px; margin-bottom: 4px; }
+  .wf-avatar { width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, rgba(5,117,230,0.6), rgba(0,180,166,0.6)); margin-right: 8px; flex-shrink: 0; }
+  .wf-author { display: flex; align-items: center; margin-top: 10px; }
+  .wf-author-lines { flex: 1; }
+  .wf-author-n { height: 7px; background: rgba(255,255,255,0.2); border-radius: 2px; width: 65%; margin-bottom: 4px; }
+  .wf-author-r { height: 6px; background: rgba(255,255,255,0.08); border-radius: 2px; width: 80%; }
+
+  /* CTA WIREFRAME */
+  .wf-cta { background: #111927; padding: 32px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .wf-cta-h { height: 20px; background: rgba(255,255,255,0.2); border-radius: 2px; width: 55%; margin: 0 auto 8px; }
+  .wf-cta-h2 { height: 20px; background: rgba(0,180,166,0.3); border-radius: 2px; width: 40%; margin: 0 auto 14px; }
+  .wf-cta-sub { height: 7px; background: rgba(255,255,255,0.08); border-radius: 2px; width: 60%; margin: 0 auto 5px; }
+  .wf-cta-btns { display: flex; gap: 10px; justify-content: center; margin-top: 16px; }
+
+  /* FOOTER WIREFRAME */
+  .wf-footer { background: #0b1422; padding: 24px; border-top: 1px solid rgba(255,255,255,0.05); }
+  .wf-footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+  .wf-footer-logo { height: 14px; background: rgba(255,255,255,0.2); border-radius: 2px; width: 60%; margin-bottom: 8px; }
+  .wf-footer-desc { height: 6px; background: rgba(255,255,255,0.08); border-radius: 2px; margin-bottom: 4px; }
+  .wf-footer-col-title { height: 8px; background: rgba(255,255,255,0.2); border-radius: 2px; width: 50%; margin-bottom: 10px; }
+  .wf-footer-link { height: 6px; background: rgba(255,255,255,0.1); border-radius: 2px; margin-bottom: 6px; }
+  .wf-footer-bottom { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 14px; display: flex; justify-content: space-between; align-items: center; }
+  .wf-footer-copy { height: 7px; background: rgba(255,255,255,0.08); border-radius: 2px; width: 30%; }
+  .wf-socials { display: flex; gap: 6px; }
+  .wf-social { width: 22px; height: 22px; border: 1px solid rgba(255,255,255,0.1); border-radius: 3px; }
+
+  /* SECTION LABEL INSIDE WIREFRAME */
+  .wf-section-bg-label {
+    background: #0d1524;
+    padding: 16px 24px;
+  }
+  .wf-section-head { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
+  .wf-section-tag { height: 7px; background: rgba(0,180,166,0.4); border-radius: 2px; width: 12%; }
+  .wf-section-title { height: 16px; background: rgba(255,255,255,0.2); border-radius: 2px; width: 45%; }
+  .wf-section-sub { height: 7px; background: rgba(255,255,255,0.1); border-radius: 2px; width: 65%; }
+
+  /* ─── ANNOTATION SYSTEM ─── */
+  .ann-wrap {
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 16px;
+    align-items: start;
+  }
+  .ann-list { display: flex; flex-direction: column; gap: 10px; }
+  .ann {
+    background: var(--ann-bg);
+    border-left: 3px solid var(--ann-border);
+    padding: 10px 14px;
+    border-radius: 0 4px 4px 0;
+    font-size: 0.8rem;
+    line-height: 1.55;
+  }
+  .ann strong {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--doc-cyan);
+    display: block;
+    margin-bottom: 3px;
+    letter-spacing: 0.06em;
+  }
+  .ann-ux {
+    background: #eef3ff;
+    border-left-color: #3b82f6;
+  }
+  .ann-ux strong { color: #3b82f6; }
+
+  /* ─── DESIGN SYSTEM ─── */
+  .ds-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; }
+  .ds-block { background: var(--doc-white); border: 1px solid var(--doc-border); border-radius: 6px; padding: 18px; }
+  .ds-block h4 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-bottom: 14px;
+    color: var(--doc-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* Colors */
+  .color-swatches { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+  .swatch { border-radius: 4px; overflow: hidden; border: 1px solid var(--doc-border); }
+  .swatch-color { height: 48px; }
+  .swatch-info { padding: 6px 8px; background: #fafbfc; }
+  .swatch-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.72rem; display: block; }
+  .swatch-hex { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--doc-muted); }
+
+  /* Typography */
+  .type-row {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--doc-border);
+  }
+  .type-row:last-child { border-bottom: none; }
+  .type-role {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--doc-muted);
+    width: 90px;
+    flex-shrink: 0;
+  }
+  .type-sample { flex: 1; }
+  .type-spec {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--doc-muted);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  /* Spacing */
+  .spacing-rows { display: flex; flex-direction: column; gap: 8px; }
+  .sp-row { display: flex; align-items: center; gap: 10px; }
+  .sp-bar { height: 12px; background: rgba(0,180,166,0.25); border: 1px solid rgba(0,180,166,0.4); border-radius: 2px; }
+  .sp-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--doc-muted); white-space: nowrap; }
+
+  /* Buttons */
+  .btn-spec-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+  .bspec { padding: 8px 18px; border-radius: 4px; font-size: 0.78rem; font-weight: 600; cursor: default; }
+  .bspec-primary { background: #00dcc8; color: #050a12; }
+  .bspec-outline  { border: 1px solid #1e2d40; color: #eef4ff; background: #050a12; }
+  .bspec-ghost    { border: 1px solid #dde1e9; color: #1a2233; }
+  .bspec-danger   { background: #e63946; color: #fff; }
+  .bspec-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--doc-muted); }
+
+  /* ─── UX FLOW TABLE ─── */
+  table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  th {
+    background: #f0f2f6;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 2px solid var(--doc-border);
+    color: var(--doc-muted);
+  }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--doc-border); vertical-align: top; line-height: 1.55; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafbfc; }
+  .pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.63rem;
+    font-weight: 500;
+  }
+  .pill-anim  { background: #e8f5ff; color: #0575e6; }
+  .pill-hover { background: #f0fff4; color: #2dc653; }
+  .pill-click { background: #fff0f3; color: #e63946; }
+  .pill-scroll{ background: #fdf4ff; color: #7c3aed; }
+  .pill-load  { background: #fff8e1; color: #d97706; }
+
+  /* ─── RESPONSIVE BREAKPOINTS ─── */
+  .bp-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+  .bp-card { background: var(--doc-white); border: 1px solid var(--doc-border); border-radius: 6px; overflow: hidden; }
+  .bp-bar { height: 6px; }
+  .bp-desktop { background: var(--doc-cyan); }
+  .bp-tablet  { background: var(--doc-blue); }
+  .bp-mobile  { background: var(--doc-red); }
+  .bp-body { padding: 14px 16px; }
+  .bp-body h5 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem; margin-bottom: 6px; }
+  .bp-body p { font-size: 0.78rem; color: var(--doc-muted); line-height: 1.6; }
+  .bp-body code { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; background: #f0f2f6; padding: 1px 5px; border-radius: 2px; }
+
+  /* ─── TECH STACK SPEC ─── */
+  .stack-spec-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; }
+  .ss-card { background: #fafbfc; border: 1px solid var(--doc-border); border-radius: 4px; padding: 12px 16px; }
+  .ss-card h5 { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--doc-muted); margin-bottom: 8px; }
+  .ss-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .ss-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; padding: 3px 8px; background: var(--doc-white); border: 1px solid var(--doc-border); border-radius: 2px; color: var(--doc-text); }
+
+  /* ─── NOTES BOX ─── */
+  .notes-box {
+    background: var(--spec-bg);
+    border: 1px solid var(--spec-border);
+    border-radius: 4px;
+    padding: 14px 18px;
+    margin-top: 16px;
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+  .notes-box strong {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--spec-border);
+    letter-spacing: 0.06em;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .notes-box ul { padding-left: 18px; }
+  .notes-box li { margin-bottom: 4px; }
+
+  /* ─── PRINT ─── */
+  @media print {
+    body { background: #fff; }
+    .page { width: 100%; }
+    .card, .ds-block, .bp-card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ══════════════════════════════════════
+       COVER
+  ══════════════════════════════════════ -->
+  <div class="cover">
+    <div class="cover-inner">
+      <div class="cover-badge">UI/UX WIREFRAME & DESIGN SPECIFICATION</div>
+      <h1>HMS <span>Technologies</span></h1>
+      <div class="cover-sub">// Pioneer in the Next-Gen Technologies — Corporate Website</div>
+      <p style="color:#6b84a3;font-size:0.88rem;max-width:520px;line-height:1.7;">
+        This document is a complete UI/UX design handoff specification for the HMS Technologies website. It includes annotated wireframes for every section, the design system (colors, typography, spacing), interaction & animation notes, responsive breakpoints, and a recommended technology stack.
+      </p>
+      <div class="cover-meta">
+        <div class="cover-meta-item">
+          <label>Project</label>
+          <span>HMS Technologies Website</span>
+        </div>
+        <div class="cover-meta-item">
+          <label>Document Type</label>
+          <span>Wireframe + UI/UX Spec</span>
+        </div>
+        <div class="cover-meta-item">
+          <label>Sections</label>
+          <span>8 Page Sections</span>
+        </div>
+        <div class="cover-meta-item">
+          <label>Version</label>
+          <span>v1.0 — April 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 1 — SITEMAP OVERVIEW
+  ══════════════════════════════════════ -->
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2>Page Structure Overview</h2>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <h3>Single-Page Layout — Section Flow</h3>
+      <span class="card-tag tag-section">STRUCTURE</span>
+    </div>
+    <div class="card-body">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+        <div style="background:#f0f2f6;border:1px solid var(--doc-border);border-radius:4px;padding:12px;text-align:center;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:var(--doc-cyan);margin-bottom:4px;">01</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;">Navigation</div>
+          <div style="font-size:0.72rem;color:var(--doc-muted);margin-top:3px;">Fixed · Sticky</div>
+        </div>
+        <div style="background:#f0f2f6;border:1px solid var(--doc-border);border-radius:4px;padding:12px;text-align:center;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:var(--doc-cyan);margin-bottom:4px;">02</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;">Hero</div>
+          <div style="font-size:0.72rem;color:var(--doc-muted);margin-top:3px;">Full viewport height</div>
+        </div>
+        <div style="background:#f0f2f6;border:1px solid var(--doc-border);border-radius:4px;padding:12px;text-align:center;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:var(--doc-cyan);margin-bottom:4px;">03</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;">Metrics</div>
+          <div style="font-size:0.72rem;color:var(--doc-muted);margin-top:3px;">4-column stats bar</div>
+        </div>
+        <div style="background:#f0f2f6;border:1px solid var(--doc-border);border-radius:4px;padding:12px;text-align:center;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:var(--doc-cyan);margin-bottom:4px;">04</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;">Services</div>
+          <div style="font-size:0.72rem;color:var(--doc-muted);margin-top:3px;">3×2 card grid</div>
+        </div>
+        <div style="background:#f0f2f6;border:1px solid var(--doc-border);border-radius:4px;padding:12px;text-align:center;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:var(--doc-cyan);margin-bottom:4px;">05</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;">Process</div>
+          <div style="font-size:0.72rem;color:var(--doc-muted);margin-top:3px;">4-step timeline</div>
+        </div>
+        <div style="background:#f0f2f6;border:1px solid var(--doc-border);border-radius:4px;padding:12px;text-align:center;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:var(--doc-cyan);margin-bottom:4px;">06</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;">Tech Stack</div>
+          <div style="font-size:0.72rem;color:var(--doc-muted);margin-top:3px;">Scrollable tag cloud</div>
+        </div>
+        <div style="background:#f0f2f6;border:1px solid var(--doc-border);border-radius:4px;padding:12px;text-align:center;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:var(--doc-cyan);margin-bottom:4px;">07</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;">Testimonials</div>
+          <div style="font-size:0.72rem;color:var(--doc-muted);margin-top:3px;">3-column quote cards</div>
+        </div>
+        <div style="background:#f0f2f6;border:1px solid var(--doc-border);border-radius:4px;padding:12px;text-align:center;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:var(--doc-cyan);margin-bottom:4px;">08</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;">CTA + Footer</div>
+          <div style="font-size:0.72rem;color:var(--doc-muted);margin-top:3px;">Contact + 4-col footer</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 2 — NAVIGATION WIREFRAME
+  ══════════════════════════════════════ -->
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2>Navigation Bar</h2>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <h3>Fixed Top Navigation</h3>
+      <span class="card-tag tag-nav">NAV</span>
+    </div>
+    <div class="card-body">
+      <div class="ann-wrap">
+        <div>
+          <div class="wf-frame" style="margin-bottom:16px;">
+            <span class="wf-frame-label">WIREFRAME — NAVBAR · HEIGHT: 72px</span>
+            <div class="wf-nav">
+              <div class="wf-logo-box">// HMS Technologies</div>
+              <div class="wf-nav-links">
+                <div class="wf-nav-link">Services</div>
+                <div class="wf-nav-link">Process</div>
+                <div class="wf-nav-link">Technology</div>
+                <div class="wf-nav-link">Clients</div>
+                <div class="wf-nav-link wf-nav-cta">Get Started</div>
+              </div>
+            </div>
+          </div>
+          <div class="notes-box">
+            <strong>DEV NOTE — Scroll Behaviour</strong>
+            On scroll ≥40px, transition <code>background</code> from <code>rgba(5,10,18,0.85)</code> → <code>rgba(5,10,18,0.97)</code>. Use <code>backdrop-filter: blur(16px)</code> at all times. Transition duration: 200ms ease.
+          </div>
+        </div>
+        <div class="ann-list">
+          <div class="ann"><strong>A1 — LOGO</strong>Font: Syne 800. Prefix "//" in IBM Plex Mono, color: #00DCC8. Links to top of page (#).</div>
+          <div class="ann"><strong>A2 — NAV LINKS</strong>DM Sans, 0.88rem, uppercase, letter-spacing 0.04em. Color: #6b84a3 → #eef4ff on hover. Anchor scroll to section IDs.</div>
+          <div class="ann"><strong>A3 — CTA BUTTON</strong>Background #00DCC8, text color #050A12, font-weight 600, padding 8px 20px. On hover: box-shadow glow.</div>
+          <div class="ann-ux"><strong>UX — MOBILE</strong>At &lt;768px hide nav links. Replace with a hamburger icon (☰) that opens a full-screen drawer menu.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 3 — HERO WIREFRAME
+  ══════════════════════════════════════ -->
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2>Hero Section</h2>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <h3>Full Viewport Hero</h3>
+      <span class="card-tag tag-section">SECTION</span>
+    </div>
+    <div class="card-body">
+      <div class="ann-wrap">
+        <div>
+          <div class="wf-frame" style="margin-bottom:16px;">
+            <span class="wf-frame-label">WIREFRAME — HERO · 100vh</span>
+            <div class="wf-hero">
+              <div style="position:absolute;width:300px;height:300px;top:-60px;right:-30px;border-radius:50%;background:radial-gradient(circle,rgba(0,180,166,0.12),transparent 70%);filter:blur(40px);"></div>
+              <div style="position:absolute;width:200px;height:200px;bottom:0;left:5%;border-radius:50%;background:radial-gradient(circle,rgba(5,117,230,0.15),transparent 70%);filter:blur(40px);"></div>
+              <div style="max-width:60%;position:relative;z-index:2;">
+                <div class="wf-hero-tag">● SYSTEM ONLINE — Accepting New Projects</div>
+                <div class="wf-h1-line" style="width:90%"></div>
+                <div class="wf-h1-line accent"></div>
+                <div style="height:6px;"></div>
+                <div class="wf-sub-line" style="width:95%"></div>
+                <div class="wf-sub-line" style="width:85%"></div>
+                <div class="wf-sub-line" style="width:70%"></div>
+                <div class="wf-btn-row">
+                  <div class="wf-btn wf-btn-solid">Start a Project</div>
+                  <div class="wf-btn wf-btn-ghost">View Services</div>
+                </div>
+              </div>
+              <div style="position:absolute;right:60px;top:50%;transform:translateY(-50%);width:220px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:4px;padding:14px;">
+                <div style="height:7px;background:rgba(0,180,166,0.3);border-radius:2px;width:40%;margin-bottom:6px;"></div>
+                <div style="height:6px;background:rgba(255,255,255,0.08);border-radius:2px;margin-bottom:4px;"></div>
+                <div style="height:6px;background:rgba(255,255,255,0.08);border-radius:2px;width:80%;margin-bottom:4px;"></div>
+                <div style="height:6px;background:rgba(255,255,255,0.08);border-radius:2px;width:60%;"></div>
+              </div>
+            </div>
+            <div class="wf-metrics">
+              <div class="wf-metric"><div class="wf-metric-num"></div><div class="wf-metric-lbl"></div></div>
+              <div class="wf-metric"><div class="wf-metric-num"></div><div class="wf-metric-lbl"></div></div>
+              <div class="wf-metric"><div class="wf-metric-num"></div><div class="wf-metric-lbl"></div></div>
+              <div class="wf-metric"><div class="wf-metric-num"></div><div class="wf-metric-lbl"></div></div>
+            </div>
+          </div>
+          <div class="notes-box">
+            <strong>DEV NOTE — Background Effects</strong>
+            Two absolutely-positioned orb divs using <code>radial-gradient</code> + <code>filter:blur(120px)</code>. Animate with keyframes: <code>transform:translate(0,0) → translate(30px,40px)</code>, 12–15s ease-in-out infinite alternate. Background grid: CSS repeating <code>linear-gradient</code> at 48×48px. Noise overlay: SVG feTurbulence as background-image, opacity 0.04.
+          </div>
+        </div>
+        <div class="ann-list">
+          <div class="ann"><strong>B1 — STATUS BADGE</strong>IBM Plex Mono, 0.75rem, color #00DCC8. Blinking dot: 6×6px circle, keyframe blink opacity 1→0.2, 1.4s infinite.</div>
+          <div class="ann"><strong>B2 — HEADLINE H1</strong>Syne 800, clamp(2.8rem,6vw,5rem), letter-spacing -0.03em. Second line uses -webkit-text-stroke: 1px #00DCC8, color transparent (outline effect).</div>
+          <div class="ann"><strong>B3 — SUBHEADING</strong>DM Sans, 1.1rem, color #6b84a3, max-width 520px, line-height 1.7.</div>
+          <div class="ann"><strong>B4 — CTA PAIR</strong>Primary: filled cyan button. Secondary: ghost/outline button. Both with hover states. Wrap on mobile.</div>
+          <div class="ann"><strong>B5 — METRICS BAR</strong>4 columns with bottom border. Each shows animated number + label. Counter animates via IntersectionObserver on scroll-into-view.</div>
+          <div class="ann-ux"><strong>UX — LOAD ANIMATION</strong>All hero elements fade-in + slide-up on page load. Stagger delay: badge 0ms → H1 100ms → sub 200ms → CTAs 300ms.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 4 — SERVICES WIREFRAME
+  ══════════════════════════════════════ -->
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2>Services Section</h2>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <h3>6-Card Services Grid</h3>
+      <span class="card-tag tag-section">SECTION</span>
+    </div>
+    <div class="card-body">
+      <div class="ann-wrap">
+        <div>
+          <div class="wf-frame" style="margin-bottom:16px;">
+            <span class="wf-frame-label">WIREFRAME — SERVICES SECTION</span>
+            <div class="wf-section-bg-label">
+              <div class="wf-section-head">
+                <div class="wf-section-tag"></div>
+                <div class="wf-section-title"></div>
+                <div class="wf-section-sub"></div>
+              </div>
+              <div class="wf-services-grid">
+                <div class="wf-service-card"><div class="wf-icon-box"></div><div class="wf-card-title"></div><div class="wf-card-text"></div><div class="wf-card-text" style="width:85%"></div><div class="wf-card-text" style="width:70%"></div><div class="wf-card-link"></div></div>
+                <div class="wf-service-card"><div class="wf-icon-box"></div><div class="wf-card-title"></div><div class="wf-card-text"></div><div class="wf-card-text" style="width:80%"></div><div class="wf-card-text" style="width:60%"></div><div class="wf-card-link"></div></div>
+                <div class="wf-service-card"><div class="wf-icon-box"></div><div class="wf-card-title"></div><div class="wf-card-text"></div><div class="wf-card-text" style="width:75%"></div><div class="wf-card-text" style="width:90%"></div><div class="wf-card-link"></div></div>
+                <div class="wf-service-card"><div class="wf-icon-box"></div><div class="wf-card-title"></div><div class="wf-card-text"></div><div class="wf-card-text" style="width:90%"></div><div class="wf-card-text" style="width:65%"></div><div class="wf-card-link"></div></div>
+                <div class="wf-service-card"><div class="wf-icon-box"></div><div class="wf-card-title"></div><div class="wf-card-text"></div><div class="wf-card-text" style="width:70%"></div><div class="wf-card-text" style="width:85%"></div><div class="wf-card-link"></div></div>
+                <div class="wf-service-card"><div class="wf-icon-box"></div><div class="wf-card-title"></div><div class="wf-card-text"></div><div class="wf-card-text" style="width:80%"></div><div class="wf-card-text" style="width:75%"></div><div class="wf-card-link"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ann-list">
+          <div class="ann"><strong>C1 — GRID LAYOUT</strong>CSS Grid, 3 columns auto-fit minmax(280px,1fr). Gap is 1px with background set to border color (creates seamless divider illusion).</div>
+          <div class="ann"><strong>C2 — ICON BOX</strong>48×48px, border 1px solid border-color, border-radius 8px, flex-centered emoji or SVG icon. Dark bg #050a12.</div>
+          <div class="ann"><strong>C3 — CARD HOVER</strong>On hover: background shifts from #0b1422 → #0f1d30. A cyan-to-transparent gradient overlay fades in (opacity 0→1, 300ms). Use ::after pseudo-element.</div>
+          <div class="ann"><strong>C4 — LEARN MORE LINK</strong>IBM Plex Mono, 0.78rem, cyan color. Arrow "→" moves right on hover via gap transition (gap 6px → 10px, 200ms).</div>
+          <div class="ann-ux"><strong>UX — SCROLL TRIGGER</strong>Each card fades up (opacity 0→1, translateY 28px→0) when scrolled into view via IntersectionObserver. Stagger by 80ms per item.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 5 — PROCESS WIREFRAME
+  ══════════════════════════════════════ -->
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2>Process + Tech Stack + Testimonials</h2>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <h3>4-Step Process Timeline</h3>
+      <span class="card-tag tag-section">SECTION</span>
+    </div>
+    <div class="card-body">
+      <div class="ann-wrap">
+        <div>
+          <div class="wf-frame" style="margin-bottom:16px;">
+            <span class="wf-frame-label">WIREFRAME — PROCESS SECTION</span>
+            <div class="wf-process">
+              <div class="wf-section-head" style="margin-bottom:20px;">
+                <div class="wf-section-tag" style="width:8%"></div>
+                <div class="wf-section-title" style="width:35%"></div>
+                <div class="wf-section-sub" style="width:55%"></div>
+              </div>
+              <div class="wf-steps">
+                <div class="wf-step" style="padding-right:16px;">
+                  <div class="wf-step-dot"></div>
+                  <div class="wf-step-label"></div>
+                  <div class="wf-step-title"></div>
+                  <div class="wf-step-text"></div>
+                  <div class="wf-step-text" style="width:85%"></div>
+                  <div class="wf-step-text" style="width:70%"></div>
+                </div>
+                <div class="wf-step" style="padding-right:16px;">
+                  <div class="wf-step-dot"></div>
+                  <div class="wf-step-label"></div>
+                  <div class="wf-step-title"></div>
+                  <div class="wf-step-text"></div>
+                  <div class="wf-step-text" style="width:75%"></div>
+                  <div class="wf-step-text" style="width:90%"></div>
+                </div>
+                <div class="wf-step" style="padding-right:16px;">
+                  <div class="wf-step-dot"></div>
+                  <div class="wf-step-label"></div>
+                  <div class="wf-step-title"></div>
+                  <div class="wf-step-text"></div>
+                  <div class="wf-step-text" style="width:80%"></div>
+                  <div class="wf-step-text" style="width:65%"></div>
+                </div>
+                <div class="wf-step">
+                  <div class="wf-step-dot"></div>
+                  <div class="wf-step-label"></div>
+                  <div class="wf-step-title"></div>
+                  <div class="wf-step-text"></div>
+                  <div class="wf-step-text" style="width:88%"></div>
+                  <div class="wf-step-text" style="width:72%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="wf-frame" style="margin-bottom:16px;">
+            <span class="wf-frame-label">WIREFRAME — TECH STACK SECTION</span>
+            <div class="wf-stack">
+              <div class="wf-section-head" style="margin-bottom:14px;">
+                <div class="wf-section-tag" style="width:10%"></div>
+                <div class="wf-section-title" style="width:28%"></div>
+                <div class="wf-section-sub" style="width:55%"></div>
+              </div>
+              <div class="wf-tags">
+                <div class="wf-tag hi">AWS</div><div class="wf-tag">Azure</div><div class="wf-tag hi">GCP</div>
+                <div class="wf-tag">Kubernetes</div><div class="wf-tag hi">Terraform</div><div class="wf-tag">Docker</div>
+                <div class="wf-tag">Python</div><div class="wf-tag hi">Node.js</div><div class="wf-tag">React</div>
+                <div class="wf-tag">PostgreSQL</div><div class="wf-tag">Redis</div><div class="wf-tag hi">Kafka</div>
+                <div class="wf-tag">Grafana</div><div class="wf-tag">Ansible</div><div class="wf-tag">Splunk</div>
+              </div>
+            </div>
+          </div>
+          <div class="wf-frame">
+            <span class="wf-frame-label">WIREFRAME — TESTIMONIALS SECTION</span>
+            <div class="wf-testimonials">
+              <div class="wf-section-head" style="margin-bottom:14px;">
+                <div class="wf-section-tag" style="width:9%"></div>
+                <div class="wf-section-title" style="width:38%"></div>
+              </div>
+              <div class="wf-tgrid">
+                <div class="wf-tcard"><div class="wf-quote-mark">"</div><div class="wf-t-line"></div><div class="wf-t-line" style="width:90%"></div><div class="wf-t-line" style="width:75%"></div><div class="wf-t-line" style="width:85%"></div><div class="wf-author"><div class="wf-avatar"></div><div class="wf-author-lines"><div class="wf-author-n"></div><div class="wf-author-r"></div></div></div></div>
+                <div class="wf-tcard"><div class="wf-quote-mark">"</div><div class="wf-t-line"></div><div class="wf-t-line" style="width:85%"></div><div class="wf-t-line" style="width:70%"></div><div class="wf-t-line" style="width:90%"></div><div class="wf-author"><div class="wf-avatar"></div><div class="wf-author-lines"><div class="wf-author-n"></div><div class="wf-author-r"></div></div></div></div>
+                <div class="wf-tcard"><div class="wf-quote-mark">"</div><div class="wf-t-line"></div><div class="wf-t-line" style="width:80%"></div><div class="wf-t-line" style="width:95%"></div><div class="wf-t-line" style="width:65%"></div><div class="wf-author"><div class="wf-avatar"></div><div class="wf-author-lines"><div class="wf-author-n"></div><div class="wf-author-r"></div></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ann-list">
+          <div class="ann"><strong>D1 — PROCESS CONNECTOR</strong>A horizontal line runs behind all 4 step dots at top (position:absolute, top:10px). Linear gradient: transparent → #00DCC8 → transparent. The dots sit on this line as milestones.</div>
+          <div class="ann"><strong>D2 — STEP NUMBERING</strong>Labels like "01 / DISCOVER" in IBM Plex Mono 0.7rem, cyan color. Each dot is 10×10px, border 2px solid cyan, with cyan glow box-shadow.</div>
+          <div class="ann"><strong>D3 — TECH TAG HOVER</strong>Default state: muted border + text. Hover: border → cyan, text → cyan, background → cyan at 15% opacity. Transition 200ms ease.</div>
+          <div class="ann"><strong>D4 — TESTIMONIAL CARD</strong>Large decorative " as ::before pseudo-element, positioned top-left. Font-size 5rem, opacity 0.15, cyan color. Quote text is positioned relatively above it.</div>
+          <div class="ann"><strong>D5 — AVATAR INITIALS</strong>38×38px circle, gradient background (blue → cyan), centered initials in Syne 700. Fallback for no profile images.</div>
+          <div class="ann-ux"><strong>UX — TECH TAGS</strong>On mobile, stack tags and allow horizontal scroll on the tag container with overflow-x: auto. No-wrap each individual tag.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 6 — CTA + FOOTER WIREFRAME
+  ══════════════════════════════════════ -->
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <h2>CTA + Footer</h2>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <h3>Call-to-Action + 4-Column Footer</h3>
+      <span class="card-tag tag-footer">FOOTER</span>
+    </div>
+    <div class="card-body">
+      <div class="ann-wrap">
+        <div>
+          <div class="wf-frame" style="margin-bottom:16px;">
+            <span class="wf-frame-label">WIREFRAME — CTA + FOOTER</span>
+            <div class="wf-cta">
+              <div style="height:7px;background:rgba(0,180,166,0.3);border-radius:2px;width:10%;margin:0 auto 10px;"></div>
+              <div class="wf-cta-h"></div>
+              <div class="wf-cta-h2"></div>
+              <div class="wf-cta-sub"></div>
+              <div class="wf-cta-sub" style="width:50%;margin:0 auto 4px;"></div>
+              <div class="wf-cta-btns">
+                <div class="wf-btn wf-btn-solid" style="min-width:110px;">Send a Brief</div>
+                <div class="wf-btn wf-btn-ghost" style="min-width:110px;">Schedule Call</div>
+              </div>
+            </div>
+            <div class="wf-footer">
+              <div class="wf-footer-grid">
+                <div>
+                  <div class="wf-footer-logo"></div>
+                  <div class="wf-footer-desc"></div>
+                  <div class="wf-footer-desc" style="width:90%"></div>
+                  <div class="wf-footer-desc" style="width:70%"></div>
+                </div>
+                <div>
+                  <div class="wf-footer-col-title"></div>
+                  <div class="wf-footer-link"></div><div class="wf-footer-link" style="width:75%"></div>
+                  <div class="wf-footer-link" style="width:85%"></div><div class="wf-footer-link" style="width:65%"></div>
+                  <div class="wf-footer-link"></div>
+                </div>
+                <div>
+                  <div class="wf-footer-col-title"></div>
+                  <div class="wf-footer-link" style="width:60%"></div><div class="wf-footer-link"></div>
+                  <div class="wf-footer-link" style="width:55%"></div><div class="wf-footer-link" style="width:80%"></div>
+                  <div class="wf-footer-link" style="width:70%"></div>
+                </div>
+                <div>
+                  <div class="wf-footer-col-title"></div>
+                  <div class="wf-footer-link" style="width:90%"></div><div class="wf-footer-link" style="width:75%"></div>
+                  <div class="wf-footer-link"></div><div class="wf-footer-link" style="width:65%"></div>
+                </div>
+              </div>
+              <div class="wf-footer-bottom">
+                <div class="wf-footer-copy"></div>
+                <div class="wf-socials">
+                  <div class="wf-social"></div>
+                  <div class="wf-social"></div>
+                  <div class="wf-social"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ann-list">
+          <div class="ann"><strong>E1 — CTA BACKGROUND</strong>Radial gradient overlay: cyan at 8% opacity centered on section. Creates a subtle glow behind the text.</div>
+          <div class="ann"><strong>E2 — CTA BUTTONS</strong>Centered flex row. Primary = filled cyan, links to mailto: or contact form. Secondary = outline, links to tel:.</div>
+          <div class="ann"><strong>E3 — FOOTER GRID</strong>4 columns: 1.4fr 1fr 1fr 1fr. At ≤768px: 2×2. At ≤480px: 1 column. Column headers in Syne 700, uppercase.</div>
+          <div class="ann"><strong>E4 — SOCIAL ICONS</strong>34×34px, border 1px solid, border-radius 4px. Hover: border → cyan, icon color → cyan. Transition 200ms.</div>
+          <div class="ann-ux"><strong>UX — FOOTER COLUMNS</strong>Services, Company, Contact. Each link scrolls to or links to the relevant section or mailto/tel. All links have a hover colour transition.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 7 — DESIGN SYSTEM
+  ══════════════════════════════════════ -->
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <h2>Design System</h2>
+  </div>
+
+  <div class="ds-grid">
+    <!-- Colors -->
+    <div class="ds-block">
+      <h4>🎨 Color Palette</h4>
+      <div class="color-swatches">
+        <div class="swatch"><div class="swatch-color" style="background:#050a12;"></div><div class="swatch-info"><span class="swatch-name">Background</span><span class="swatch-hex">#050A12</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#0b1422;"></div><div class="swatch-info"><span class="swatch-name">Surface</span><span class="swatch-hex">#0B1422</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#0f1d30;"></div><div class="swatch-info"><span class="swatch-name">Panel</span><span class="swatch-hex">#0F1D30</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#00dcc8;"></div><div class="swatch-info"><span class="swatch-name">Cyan (Primary)</span><span class="swatch-hex">#00DCC8</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#0575e6;"></div><div class="swatch-info"><span class="swatch-name">Blue (Accent)</span><span class="swatch-hex">#0575E6</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#eef4ff;"></div><div class="swatch-info"><span class="swatch-name">White</span><span class="swatch-hex">#EEF4FF</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#6b84a3;"></div><div class="swatch-info"><span class="swatch-name">Muted Text</span><span class="swatch-hex">#6B84A3</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:rgba(0,220,200,0.12);border:1px dashed #00dcc8;"></div><div class="swatch-info"><span class="swatch-name">Border</span><span class="swatch-hex">rgba(0,220,200,0.12)</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:rgba(0,220,200,0.35);"></div><div class="swatch-info"><span class="swatch-name">Cyan Glow</span><span class="swatch-hex">rgba(0,220,200,0.35)</span></div></div>
+      </div>
+    </div>
+
+    <!-- Typography -->
+    <div class="ds-block">
+      <h4>🔤 Typography Scale</h4>
+      <div class="type-row">
+        <span class="type-role">Display H1</span>
+        <span class="type-sample" style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;letter-spacing:-0.03em;">HMS</span>
+        <span class="type-spec">Syne 800 · clamp(2.8,6vw,5rem)</span>
+      </div>
+      <div class="type-row">
+        <span class="type-role">Section H2</span>
+        <span class="type-sample" style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:-0.025em;">Our Services</span>
+        <span class="type-spec">Syne 800 · clamp(2,4vw,3rem)</span>
+      </div>
+      <div class="type-row">
+        <span class="type-role">Card H3</span>
+        <span class="type-sample" style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;">Cloud Infrastructure</span>
+        <span class="type-spec">Syne 700 · 1.1rem</span>
+      </div>
+      <div class="type-row">
+        <span class="type-role">Body</span>
+        <span class="type-sample" style="font-family:'DM Sans',sans-serif;font-size:0.85rem;color:#6b84a3;">We engineer the future.</span>
+        <span class="type-spec">DM Sans 400 · 1rem</span>
+      </div>
+      <div class="type-row">
+        <span class="type-role">Mono Label</span>
+        <span class="type-sample" style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:#00dcc8;letter-spacing:0.1em;">// WHAT WE DO</span>
+        <span class="type-spec">IBM Plex Mono · 0.72rem</span>
+      </div>
+      <div class="type-row">
+        <span class="type-role">Nav Link</span>
+        <span class="type-sample" style="font-family:'DM Sans',sans-serif;font-size:0.78rem;letter-spacing:0.04em;text-transform:uppercase;">SERVICES</span>
+        <span class="type-spec">DM Sans · 0.88rem uppercase</span>
+      </div>
+    </div>
+
+    <!-- Spacing -->
+    <div class="ds-block">
+      <h4>📐 Spacing Scale</h4>
+      <div class="spacing-rows">
+        <div class="sp-row"><div class="sp-bar" style="width:16px;"></div><span class="sp-label">xs — 4px (inner padding, gaps)</span></div>
+        <div class="sp-row"><div class="sp-bar" style="width:32px;"></div><span class="sp-label">sm — 8px (button padding, badge)</span></div>
+        <div class="sp-row"><div class="sp-bar" style="width:56px;"></div><span class="sp-label">md — 14px (card inner padding)</span></div>
+        <div class="sp-row"><div class="sp-bar" style="width:80px;"></div><span class="sp-label">lg — 20px (card padding)</span></div>
+        <div class="sp-row"><div class="sp-bar" style="width:144px;"></div><span class="sp-label">xl — 36px (card generous padding)</span></div>
+        <div class="sp-row"><div class="sp-bar" style="width:200px;"></div><span class="sp-label">2xl — 60px (section vertical padding)</span></div>
+        <div class="sp-row"><div class="sp-bar" style="width:240px;"></div><span class="sp-label">3xl — 100px (full section inner pad)</span></div>
+      </div>
+      <div style="margin-top:14px;font-size:0.78rem;color:var(--doc-muted);">
+        <strong style="color:var(--doc-text);">Page Max Width:</strong> 1200px · <strong style="color:var(--doc-text);">Horizontal Padding:</strong> 5% (fluid)
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="ds-block">
+      <h4>🔘 Button States</h4>
+      <div class="btn-spec-row">
+        <div class="bspec bspec-primary">Primary</div>
+        <span class="bspec-label">bg #00DCC8 · text #050A12 · hover: glow + translateY(-2px)</span>
+      </div>
+      <div class="btn-spec-row">
+        <div class="bspec bspec-outline">Outline</div>
+        <span class="bspec-label">border + text · hover: bg cyan-dim + border cyan</span>
+      </div>
+      <div class="btn-spec-row">
+        <div class="bspec bspec-ghost">Ghost</div>
+        <span class="bspec-label">Light border only · used in light contexts</span>
+      </div>
+      <div class="btn-spec-row">
+        <div class="bspec bspec-danger">Nav CTA</div>
+        <span class="bspec-label">Compact version in navbar · same as Primary</span>
+      </div>
+      <div style="margin-top:10px;font-size:0.78rem;color:var(--doc-muted);">
+        All buttons: <code style="font-family:'IBM Plex Mono',monospace;background:#f0f2f6;padding:1px 5px;border-radius:2px;">border-radius: 4px</code> · Transitions: 200–250ms ease
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 8 — INTERACTION / UX TABLE
+  ══════════════════════════════════════ -->
+  <div class="section-header">
+    <span class="section-num">08</span>
+    <h2>Interaction & Animation Spec</h2>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <h3>Full Interaction Map</h3>
+      <span class="card-tag tag-ux">UX BEHAVIOUR</span>
+    </div>
+    <div class="card-body" style="padding:0;">
+      <table>
+        <thead>
+          <tr>
+            <th>Element</th>
+            <th>Trigger</th>
+            <th>Behaviour</th>
+            <th>Duration / Easing</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Hero content</strong></td>
+            <td>Page load</td>
+            <td>Fade in + slide up (translateY 28px→0, opacity 0→1). Stagger: tag 0ms, H1 100ms, sub 200ms, buttons 300ms</td>
+            <td>700ms ease</td>
+            <td><span class="pill pill-load">LOAD</span></td>
+          </tr>
+          <tr>
+            <td><strong>Orb backgrounds</strong></td>
+            <td>Continuous</td>
+            <td>Drift via @keyframes translate(0,0)→translate(30px,40px), infinite alternate</td>
+            <td>12–15s ease-in-out</td>
+            <td><span class="pill pill-anim">ANIM</span></td>
+          </tr>
+          <tr>
+            <td><strong>Status badge dot</strong></td>
+            <td>Continuous</td>
+            <td>Opacity blink: 1→0.2→1 (simulates live status indicator)</td>
+            <td>1.4s ease-in-out ∞</td>
+            <td><span class="pill pill-anim">ANIM</span></td>
+          </tr>
+          <tr>
+            <td><strong>Metric counters</strong></td>
+            <td>Scroll into view</td>
+            <td>Numbers count up from 0 to final value using easeOutCubic. Triggered once per session by IntersectionObserver</td>
+            <td>1600ms cubic</td>
+            <td><span class="pill pill-scroll">SCROLL</span></td>
+          </tr>
+          <tr>
+            <td><strong>All .fade-up elements</strong></td>
+            <td>Scroll into view</td>
+            <td>opacity 0→1, translateY 28px→0. Stagger each item 80ms. Unobserve after trigger (fires once)</td>
+            <td>700ms ease · threshold 10%</td>
+            <td><span class="pill pill-scroll">SCROLL</span></td>
+          </tr>
+          <tr>
+            <td><strong>Service card</strong></td>
+            <td>Hover</td>
+            <td>Background darkens (#0b1422→#0f1d30). Cyan gradient overlay ::after fades in (opacity 0→1)</td>
+            <td>200ms / 300ms ease</td>
+            <td><span class="pill pill-hover">HOVER</span></td>
+          </tr>
+          <tr>
+            <td><strong>Learn more arrow</strong></td>
+            <td>Hover (parent card)</td>
+            <td>Gap between text and "→" increases (6px→10px)</td>
+            <td>200ms ease</td>
+            <td><span class="pill pill-hover">HOVER</span></td>
+          </tr>
+          <tr>
+            <td><strong>Primary button</strong></td>
+            <td>Hover</td>
+            <td>box-shadow: 0 0 32px rgba(0,220,200,0.35) + translateY(-2px)</td>
+            <td>250ms ease</td>
+            <td><span class="pill pill-hover">HOVER</span></td>
+          </tr>
+          <tr>
+            <td><strong>Tech stack tags</strong></td>
+            <td>Hover</td>
+            <td>border-color → #00DCC8, color → #00DCC8, background → rgba(0,220,200,0.15)</td>
+            <td>200ms ease</td>
+            <td><span class="pill pill-hover">HOVER</span></td>
+          </tr>
+          <tr>
+            <td><strong>Nav bar</strong></td>
+            <td>Window scroll</td>
+            <td>background transitions from 0.85→0.97 opacity. JS listens to window.scroll event</td>
+            <td>instant (JS event)</td>
+            <td><span class="pill pill-scroll">SCROLL</span></td>
+          </tr>
+          <tr>
+            <td><strong>Nav links</strong></td>
+            <td>Click</td>
+            <td>Smooth scroll to anchor section via scroll-behavior: smooth on html element</td>
+            <td>CSS native</td>
+            <td><span class="pill pill-click">CLICK</span></td>
+          </tr>
+          <tr>
+            <td><strong>Social icons</strong></td>
+            <td>Hover</td>
+            <td>border-color → cyan, icon color → cyan</td>
+            <td>200ms ease</td>
+            <td><span class="pill pill-hover">HOVER</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 9 — RESPONSIVE BREAKPOINTS
+  ══════════════════════════════════════ -->
+  <div class="section-header">
+    <span class="section-num">09</span>
+    <h2>Responsive Breakpoints</h2>
+  </div>
+  <div class="bp-grid">
+    <div class="bp-card">
+      <div class="bp-bar bp-desktop"></div>
+      <div class="bp-body">
+        <h5>🖥 Desktop</h5>
+        <p><code>&gt; 768px</code><br>
+          Full layout as designed. 3-column services, 4-column footer, nav links visible, 4-step process row.</p>
+      </div>
+    </div>
+    <div class="bp-card">
+      <div class="bp-bar bp-tablet"></div>
+      <div class="bp-body">
+        <h5>📱 Tablet</h5>
+        <p><code>481px – 768px</code><br>
+          Footer: 2×2 grid. Services: 2-col. Process: 2×2. Nav links hidden → hamburger icon shown.</p>
+      </div>
+    </div>
+    <div class="bp-card">
+      <div class="bp-bar bp-mobile"></div>
+      <div class="bp-body">
+        <h5>📲 Mobile</h5>
+        <p><code>≤ 480px</code><br>
+          Footer: 1-col stacked. Services: 1-col. Process: vertical list. Hero text: full width. Metrics: 2×2.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 10 — TECH RECOMMENDATIONS
+  ══════════════════════════════════════ -->
+  <div class="section-header">
+    <span class="section-num">10</span>
+    <h2>Recommended Tech Stack for Coding</h2>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <h3>Implementation Recommendations</h3>
+      <span class="card-tag tag-component">DEVELOPER GUIDE</span>
+    </div>
+    <div class="card-body">
+      <div class="stack-spec-grid">
+        <div class="ss-card">
+          <h5>Frontend Framework</h5>
+          <div class="ss-tags">
+            <span class="ss-tag">HTML5 + CSS3 + Vanilla JS</span>
+            <span class="ss-tag">or React.js</span>
+            <span class="ss-tag">or Next.js (recommended for SEO)</span>
+          </div>
+        </div>
+        <div class="ss-card">
+          <h5>CSS Approach</h5>
+          <div class="ss-tags">
+            <span class="ss-tag">CSS Variables (tokens)</span>
+            <span class="ss-tag">CSS Grid + Flexbox</span>
+            <span class="ss-tag">or Tailwind CSS</span>
+          </div>
+        </div>
+        <div class="ss-card">
+          <h5>Fonts (Google Fonts CDN)</h5>
+          <div class="ss-tags">
+            <span class="ss-tag">Syne (headings)</span>
+            <span class="ss-tag">IBM Plex Mono (labels)</span>
+            <span class="ss-tag">DM Sans (body)</span>
+          </div>
+        </div>
+        <div class="ss-card">
+          <h5>Animation Libraries</h5>
+          <div class="ss-tags">
+            <span class="ss-tag">CSS @keyframes (orbs, blink)</span>
+            <span class="ss-tag">IntersectionObserver API</span>
+            <span class="ss-tag">or GSAP (optional)</span>
+          </div>
+        </div>
+        <div class="ss-card">
+          <h5>Icons</h5>
+          <div class="ss-tags">
+            <span class="ss-tag">Lucide Icons</span>
+            <span class="ss-tag">or Heroicons</span>
+            <span class="ss-tag">or Unicode Emoji (minimal)</span>
+          </div>
+        </div>
+        <div class="ss-card">
+          <h5>Contact / Form</h5>
+          <div class="ss-tags">
+            <span class="ss-tag">mailto: link (simple)</span>
+            <span class="ss-tag">or Formspree</span>
+            <span class="ss-tag">or custom backend (Node/PHP)</span>
+          </div>
+        </div>
+      </div>
+      <div class="notes-box" style="margin-top:16px;">
+        <strong>PERFORMANCE NOTES FOR DEVELOPER</strong>
+        <ul>
+          <li>Use <code>backdrop-filter: blur()</code> sparingly — only on the navbar. Overuse causes performance drops on low-end devices.</li>
+          <li>Lazy-load all images. Serve WebP format with PNG fallback.</li>
+          <li>Preconnect to Google Fonts: <code>&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;</code></li>
+          <li>IntersectionObserver callbacks should <code>unobserve()</code> elements after they animate to avoid redundant calls.</li>
+          <li>The grid background and noise overlay use <code>position:fixed</code> — ensure they are below all content via <code>z-index: 0</code> and <code>pointer-events: none</code>.</li>
+          <li>Counter animation uses <code>requestAnimationFrame</code> with easeOutCubic: <code>1 - Math.pow(1 - progress, 3)</code></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="text-align:center;padding:40px 0 20px;font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:var(--doc-muted);border-top:1px solid var(--doc-border);margin-top:40px;">
+    HMS Technologies — UI/UX Wireframe & Design Specification · v1.0 · April 2026 · Confidential
+  </div>
+
+</div>
+</body>
+</html>

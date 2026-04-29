@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -iE \"^\\(cloud|cloud-cog|globe|settings|box|bot|git-merge|refresh-cw|terminal|server|atom|database|zap|search|message-square|network|shield|shield-check|chart-bar|flame|trending-up|wind|lock|code|wrench|activity|package|blocks\\)\\\\.d\\\\.ts$\")"
+    ]
+  }
+}
